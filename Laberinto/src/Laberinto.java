@@ -5,6 +5,8 @@ import javax.swing.border.EmptyBorder;
 import java.awt.BorderLayout;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 import java.awt.Font;
@@ -60,10 +62,20 @@ public class Laberinto extends JFrame {
 		opciones.add(btnNewButton);
 		
 		//Mapas
-		int [][] mapa1 = new int[5][5];
+		int [][] mapa1 = 
+			{ {1,-1,1,1,1,1,1,1,1,1,1,1,1},
+			  {1,0,1,0,1,0,1,0,0,0,0,0,1},
+			  {1,0,1,0,0,0,1,0,1,1,1,0,1},
+			  {1,0,0,0,1,1,1,0,0,0,0,0,1},
+			  {1,0,1,0,0,0,0,0,1,1,1,0,1},
+			  {1,0,1,0,1,1,1,0,1,0,0,0,1},
+			  {1,0,1,0,1,0,0,0,1,1,1,0,1},
+			  {1,0,1,0,1,1,1,0,1,0,1,0,1},
+			  {1,0,0,0,0,0,0,0,0,0,1,0,1},
+			  {1,1,1,1,1,1,1,1,1,1,1,-2,1}
+			};
 		
-		JPanel juego = new JPanel();
+		Mapa juego = new Mapa(mapa1);
 		contentPane.add(juego, BorderLayout.CENTER);
-		juego.requestFocus();
 	}
 }
