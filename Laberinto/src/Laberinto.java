@@ -49,18 +49,6 @@ public class Laberinto extends JFrame {
 		panel_3.setBackground(new Color(128, 255, 255));
 		contentPane.add(panel_3, BorderLayout.NORTH);
 		
-		JPanel opciones = new JPanel();
-		opciones.setBackground(new Color(128, 255, 128));
-		contentPane.add(opciones, BorderLayout.SOUTH);
-		
-		JButton btnNewButton = new JButton("Reiniciar");
-		btnNewButton.setFont(new Font("Brock", Font.PLAIN, 16));
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		opciones.add(btnNewButton);
-		
 		//Mapas
 		int [][] mapa1 = 
 			{ {1,-1,1,1,1,1,1,1,1,1,1,1,1},
@@ -77,5 +65,18 @@ public class Laberinto extends JFrame {
 		
 		Mapa juego = new Mapa(mapa1);
 		contentPane.add(juego, BorderLayout.CENTER);
+		
+		JPanel opciones = new JPanel();
+		opciones.setBackground(new Color(128, 255, 128));
+		contentPane.add(opciones, BorderLayout.SOUTH);
+		
+		JButton btnNewButton = new JButton("Reiniciar");
+		btnNewButton.setFont(new Font("Brock", Font.PLAIN, 16));
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+		        juego.reiniciarJuego();
+			}
+		});
+		opciones.add(btnNewButton);
 	}
 }

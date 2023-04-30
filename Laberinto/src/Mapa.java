@@ -14,6 +14,10 @@ public class Mapa extends JPanel {
     private int filas = 0;
     private int columnas = 0;
     
+    //Ubicación inicial del jugador
+    private int inicioFilaJugador;
+    private int inicioColumnaJugador;
+    
     //Ubicación del jugador
     private int filaJugador;
     private int columnaJugador;
@@ -116,6 +120,7 @@ public class Mapa extends JPanel {
             }
         }
     }
+    
     public void encontrarJugador() {
     	//Busca la posición inicial del jugador
         for (int i = 0; i < filas; i++) {
@@ -127,7 +132,10 @@ public class Mapa extends JPanel {
                 }
             }
         }
+    	inicioFilaJugador = filaJugador;
+    	inicioColumnaJugador = columnaJugador;
     }
+    
     public void encontrarSalida() {
     	//Busca la posición inicial del jugador
         for (int i = 0; i < filas; i++) {
@@ -140,10 +148,19 @@ public class Mapa extends JPanel {
             }
         }
     }
+    
     public void comprobarSalida() {
     	if (filaJugador == filaSalida && columnaJugador == columnaSalida && !mapaCompletado) {
     	    JOptionPane.showMessageDialog(this, "¡Felicidades, has ganado!");
     	    mapaCompletado = true;
     	}
+    }
+
+    public void reiniciarJuego() {
+        filaJugador = inicioFilaJugador;
+        columnaJugador = inicioColumnaJugador;
+        mapaCompletado = false;
+        repaint();
+        requestFocusInWindow();
     }
 }
