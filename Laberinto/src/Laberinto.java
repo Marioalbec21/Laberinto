@@ -32,7 +32,7 @@ public class Laberinto extends JFrame {
 	
 	public Laberinto() throws IOException {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 400, 420);
+		setBounds(100, 100, 400, 460);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -47,13 +47,15 @@ public class Laberinto extends JFrame {
 		panel_2.setBackground(new Color(128, 255, 255));
 		contentPane.add(panel_2, BorderLayout.EAST);
 		
-		JPanel panel_3 = new JPanel();
-		panel_3.setBackground(new Color(128, 255, 255));
-		contentPane.add(panel_3, BorderLayout.NORTH);
+		Reloj reloj = new Reloj();
+		reloj.setBackground(new Color(128, 255, 255));
+		contentPane.add(reloj, BorderLayout.NORTH);
 		
 		//Mapas
 		Carga lab1 = new Carga("lab1.png");
+		Carga lab2 = new Carga("lab2.png");
 
+		reloj.iniciar();
 		Mapa juego = new Mapa(lab1.getMatriz());
 		contentPane.add(juego, BorderLayout.CENTER);
 		
@@ -99,7 +101,15 @@ public class Laberinto extends JFrame {
 				            repaint();
 				        }
 				    }
-			        juego.comprobarSalida();
+			        if(juego.comprobarSalida()) {
+			        	reloj.detener();
+			    	    JOptionPane.showMessageDialog(null, "¡Felicidades, has ganado!");
+
+			        	if(juego.eleccionSalida()) {	
+			        		reloj.reiniciar();
+			        		juego.actualizarMapa(lab2.getMatriz());
+			        	}
+			        }
 			    }
 			}
 
@@ -119,6 +129,7 @@ public class Laberinto extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 		        juego.reiniciarJuego();
+		        reloj.reiniciar();
 			}
 		});
 		opciones.add(btnNewButton);

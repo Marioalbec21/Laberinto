@@ -96,29 +96,27 @@ public class Mapa extends JPanel {
         }
     }
     
-    public void comprobarSalida() {
+    public boolean comprobarSalida() {
+    	
     	if (filaJugador == filaSalida && columnaJugador == columnaSalida && !mapaCompletado) {
-    	    JOptionPane.showMessageDialog(this, "¡Felicidades, has ganado!");
     	    mapaCompletado = true;
-    	    
-    	    int opcion = JOptionPane.showConfirmDialog(null, "¿Deseas jugar otro nivel?", "Nuevo nivel", JOptionPane.YES_NO_OPTION);
-	        
-	        if (opcion == JOptionPane.YES_OPTION) {
-	        	 Carga lab2;
-				try {
-					lab2 = new Carga("lab2.png");
-					actualizarMapa(lab2.getMatriz());
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-	        } else {
-	            System.exit(0);
-	        }
+	        return true;
     	}
+    	else
+    		return false;
     }
-
-    public void reiniciarJuego() {
+    
+    public boolean eleccionSalida() {
+  	    int opcion = JOptionPane.showConfirmDialog(null, "¿Deseas jugar otro nivel?", "Nuevo nivel", JOptionPane.YES_NO_OPTION);
+        
+        if (opcion == JOptionPane.YES_OPTION) {
+        	return true;
+        } else {
+        	return false;
+        }
+    }
+    
+	public void reiniciarJuego() {
         filaJugador = inicioFilaJugador;
         columnaJugador = inicioColumnaJugador;
         mapaCompletado = false;
