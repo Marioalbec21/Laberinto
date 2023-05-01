@@ -3,6 +3,7 @@ import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -39,60 +40,6 @@ public class Mapa extends JPanel {
 		
 		encontrarJugador();
 		encontrarSalida();
-
-        //Metodos teclado
-        addKeyListener(new KeyListener() {
-
-			@Override
-			public void keyTyped(KeyEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void keyPressed(KeyEvent e) {
-			    char tecla = e.getKeyChar();
-			    if (!mapaCompletado) {
-
-				    //Mueve al jugador 1 casilla a la izquierda
-				    if (tecla == 'a') {
-				        if (columnaJugador > 0 && mapa[filaJugador][columnaJugador - 1] != 1) {
-				            columnaJugador--;
-				            repaint();
-				        }
-				    }
-				    //Mueve al jugador 1 casilla abajo
-				    if (tecla == 's') {
-				        if (filaJugador < filas - 1 && mapa[filaJugador + 1][columnaJugador] != 1) {
-				            filaJugador++;
-				            repaint();
-				        }
-				    }
-				    //Mueve al jugador 1 casilla arriba
-				    if (tecla == 'w') {
-				    	if (filaJugador > 0 && mapa[filaJugador - 1][columnaJugador] != 1) {
-				    		filaJugador--;
-				    		repaint();
-				    	}
-				    }
-				    //Mueve al jugador 1 casilla a la derecha
-				    if (tecla == 'd') {
-				        if (columnaJugador < columnas - 1 && mapa[filaJugador][columnaJugador + 1] != 1) {
-				            columnaJugador++;
-				            repaint();
-				        }
-				    }
-			        comprobarSalida();
-			    }
-			}
-
-			@Override
-			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-		requestFocus(true);
     }
 
     @Override
@@ -153,6 +100,21 @@ public class Mapa extends JPanel {
     	if (filaJugador == filaSalida && columnaJugador == columnaSalida && !mapaCompletado) {
     	    JOptionPane.showMessageDialog(this, "¡Felicidades, has ganado!");
     	    mapaCompletado = true;
+    	    
+    	    int opcion = JOptionPane.showConfirmDialog(null, "¿Deseas jugar otro nivel?", "Nuevo nivel", JOptionPane.YES_NO_OPTION);
+	        
+	        if (opcion == JOptionPane.YES_OPTION) {
+	        	 Carga lab2;
+				try {
+					lab2 = new Carga("lab2.png");
+					actualizarMapa(lab2.getMatriz());
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	        } else {
+	            System.exit(0);
+	        }
     	}
     }
 
@@ -163,4 +125,61 @@ public class Mapa extends JPanel {
         repaint();
         requestFocusInWindow();
     }
+    
+    public void actualizarMapa(int[][] mapa) {
+        this.mapa = mapa;
+        this.filas = mapa.length;
+        this.columnas = mapa[0].length;
+        this.filaJugador = this.columnaJugador = 1;
+        this.mapaCompletado = false;
+        
+		encontrarJugador();
+		encontrarSalida();
+		
+        this.repaint();
+    }
+    
+	public int[][] getMapa() {
+		return mapa;
+	}
+	
+	public int getColumnas() {
+		return columnas;
+	}
+
+	public void setColumnas(int columnas) {
+		this.columnas = columnas;
+	}
+
+	public int getFilas() {
+		return filas;
+	}
+
+	public void setFilas(int filas) {
+		this.filas = filas;
+	}
+
+	public void setColumnaJugador(int columnaJugador) {
+		this.columnaJugador = columnaJugador;
+	}
+
+	public void setFilaJugador(int filaJugador) {
+		this.filaJugador = filaJugador;
+	}
+
+	public int getFilaJugador() {
+		return filaJugador;
+	}
+
+	public int getColumnaJugador() {
+		return columnaJugador;
+	}
+
+	public void setMapaCompletado(boolean mapaCompletado) {
+		this.mapaCompletado = mapaCompletado;
+	}
+
+	public boolean isMapaCompletado() {
+		return mapaCompletado;
+	}
 }
